@@ -7,9 +7,8 @@
 clc;clear;close;
 
 %% Parametros %
-bits = 12;                  % Numero de bits
+bits = 0;                   % Numero de bits (0 - sem quantizacao)
 filterType = 0;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
-quantizar = 1;              % Flag p/ quantizacao
 % -------- %
 
 %% Especificacoes %
@@ -24,6 +23,10 @@ As = 35;                    % Atenuacao minima da banda de rejeicao
 Wp = 2*pi*(fp/ft);          % Frequencias limite da banda passante normalizadas
 Ws = 2*pi*(fs/ft);          % Frequencias limite da banda de rejeicao normalizadas
 
+% Fatores de escalonamento
+a0Escal = 6;
+gEscal = 20.5;
+
 % Pre distorcao das frequencias
 WpDist = 2*ft*tan(Wp/2);
 WsDist = 2*ft*tan(Ws/2);
@@ -36,9 +39,19 @@ WsDist = 2*ft*tan(Ws/2);
 % -------- %
 
 %% Nao Quantizado - Impulsos %
-if (quantizar == 0)
+if (bits == 0)
     [z, p, k] = gerarFiltro(n,Wn,filterType);
     [zd, pd, kd] = bilinear(z,p,k,ft);
     [sos,g] = zp2sos(zp,pd,kd,'up','two');
-    k = 200;
+    sos = sos/a0Escal;
+    k = 345;
     x = [g, zeros(1,k)];
+    
+    [y,w] = implementaIIR(n,k,x,sos,a0Escal,bits);
+    y = y*gEscal;
+    
+    figure
+    freqz(y(Ordempb,1:k)); %Resolucao da dtft eh de 512
+    % freqz ftw!
+    axis([0 1 -40 10]) % Ajustar eixos
+end
