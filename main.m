@@ -33,3 +33,12 @@ WsDist = 2*ft*tan(Ws/2);
 
 % Otimiza a especificacao do filtro p/ ter o menor Ap possivel com mesma ordem
 [n,Wn,ApMin] = preOtimizacao(WpDist,WsDist,Ap,As,filterType);
+% -------- %
+
+%% Nao Quantizado - Impulsos %
+if (quantizar == 0)
+    [z, p, k] = gerarFiltro(n,Wn,filterType);
+    [zd, pd, kd] = bilinear(z,p,k,ft);
+    [sos,g] = zp2sos(zp,pd,kd,'up','two');
+    k = 200;
+    x = [g, zeros(1,k)];
