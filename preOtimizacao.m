@@ -28,6 +28,6 @@ function [n, Wn, ApMin] = preOtimizacao(Wp, Ws, Ap, As, filterType)
         [n,Wn,ApMin] = cheb2Folga(Wp, Ws, Ap, As);
         
     elseif (filterType == 3)    % Eliptico
-        [n,Wn,ApMin] = ellipFolga(Wp, Ws, Ap, As);
+        [n,Wn,ApMin] = elipticoFolga(Wp, Ws, Ap, As);
     end
 end

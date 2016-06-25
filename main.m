@@ -34,4 +34,4 @@ WsDist = 2*ft*tan(Ws/2);
 % Otimiza a especificacao do filtro p/ ter o menor Ap possivel com mesma ordem
 [n,Wn,ApMin] = preOtimizacao(WpDist,WsDist,Ap,As,filterType);
 
-
+case 
