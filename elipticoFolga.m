@@ -27,7 +27,6 @@ function [n,Wn,Apmin] = elipticoFolga(Wp,Ws,Ap,As)
         [n,~] = ellipord(Wp,Ws,Ap,As,'s');  
     end
     Apmin = Ap+0.0001;         %Retorna ao valor que Ap possuia da ordem aumentar
-    n = n-1;                %Retorna a ordem inicialmente gerada por ellipord()
     [n,Wn] = ellipord(Wp,Ws,Apmin,As,'s');
     
 end
