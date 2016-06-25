@@ -1,4 +1,4 @@
-% Projeto Filtro FIR Passa Baixa
+% Projeto Filtro IIR
 % Pre-otimizacao
 % Calcula o menor Ap que continue com a mesma ordem do filtro
 % 

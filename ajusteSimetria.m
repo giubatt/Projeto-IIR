@@ -1,14 +1,14 @@
 % Projeto Filtro IIR
 % Teste de simetria
 % Calcula ws e wp que satisfaçam a simetria, sem modificar wp
-
+% 
 % Autores: Lucas Fernandes e Giuseppe Battistella
 % Data: 25/06/2016
-
+% 
 % in:
 % ws = frequencias de banda de rejeicao
 % wp = frequencias de banda passante
-
+% 
 % out:
 % ws = freq de rejeicao simetricas em relacao a wp
 % wp = freq de banda passante

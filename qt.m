@@ -1,10 +1,10 @@
-% Projeto Filtro FIR 
+% Projeto Filtro IIR 
 % Quantizador
 % Quantiza a funcao de acordo com a quantidade de bits do parametro
-
+% 
 % Autores: Lucas Fernandes e Giuseppe Bastitella
-% Data: 28/05/2016
-
+% Data: 25/06/2016
+% 
 % bits = quantidade de bits da mantissa, vetor = vetor a ser quantizado; 
 
 function [vetor_quantizado] = qt(vetor, bits)
