@@ -28,6 +28,5 @@ function [n,Wn,Apmin] = cheb1Folga(Wp,Ws,Ap,As)
         [n,~] = cheb1ord(Wp,Ws,Ap,As,'s');  
     end
     Apmin = Ap+0.0001;         %Retorna ao valor que Ap possuia da ordem aumentar
-    n = n-1;                %Retorna a ordem inicialmente gerada por cheb1ord
     [n,Wn] = cheb1ord(Wp,Ws,Apmin,As,'s');
 end

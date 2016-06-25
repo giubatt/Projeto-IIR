@@ -27,6 +27,5 @@ function [n,Wn,Apmin] = butterFolga(Wp,Ws,Ap,As)
         [n,~] = buttord(Wp,Ws,Ap,As,'s');  
     end
     Apmin = Ap+0.0001;         %Retorna ao valor que Ap possuia da ordem aumentar
-    n = n-1;                %Retorna a ordem inicialmente gerada por buttord
     [n,Wn] = buttord(Wp,Ws,Apmin,As,'s');
 end
