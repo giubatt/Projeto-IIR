@@ -13,7 +13,7 @@
 % ws = freq de rejeicao simetricas em relacao a wp
 % wp = freq de banda passante
 
-function [wp, ws] = testeSimetria(wp, ws)
+function [wp, ws] = ajusteSimetria(wp, ws)
     if ( ws(1)*ws(2) < wp(1)*wp(2) )
         ws(1) = wp(1)*wp(2)/ws(2);
     else
