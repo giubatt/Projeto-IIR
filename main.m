@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 % Projeto Filtro IIR
 % Programa principal
 
@@ -23,3 +25,4 @@ As = 35;                % Atenuacao minima da banda de rejeicao
 %% 
 wp = 2*pi*(fp/ft);      % Frequencias limite da banda passante normalizadas
 ws = 2*pi*(fs/ft);  	% Frequencias limite da banda de rejeicao normalizadas
+>>>>>>> refs/remotes/origin/master
