@@ -19,15 +19,15 @@
 
 function [n, Wn, ApMin] = preOtimizacao(Wp, Ws, Ap, As, filterType)
     if (filterType == 0)        % Butterworth
-        [n,Wn,ApMin] = butterFolga(Wp, Ws, Ap, As, filterType);
+        [n,Wn,ApMin] = butterFolga(Wp, Ws, Ap, As);
         
     elseif (filterType == 1)    % Chebyshev 1
-        [n,Wn,ApMin] = cheb1Folga(Wp, Ws, Ap, As, filterType);
+        [n,Wn,ApMin] = cheb1Folga(Wp, Ws, Ap, As);
         
     elseif (filterType == 2)    % Chebyshev 2
-        [n,Wn,ApMin] = cheb2Folga(Wp, Ws, Ap, As, filterType);
+        [n,Wn,ApMin] = cheb2Folga(Wp, Ws, Ap, As);
         
     elseif (filterType == 3)    % Eliptico
-        [n,Wn,ApMin] = ellipFolga(Wp, Ws, Ap, As, filterType);
+        [n,Wn,ApMin] = ellipFolga(Wp, Ws, Ap, As);
     end
 end
