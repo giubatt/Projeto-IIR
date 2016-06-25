@@ -12,7 +12,6 @@
 %Ap = Ripple na banda passante
 %As = Atenuacao na banda de rejeicao
 
-
 %out:
 %Apmin = ripple na banda apos o ajuste de folga
 %Wn = O escalar ou vetor das correspondentes frequencias de corte
