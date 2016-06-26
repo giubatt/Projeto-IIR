@@ -9,6 +9,7 @@
 %% Parametros %
 bits = 16;                  % Numero de bits (0 - sem quantizacao)
 tipoFiltro = 2;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
+tipoTeste = 0;              % Tipo do teste (0 - impulso, 1 - senoides)
 % -------- %
 
 %% Especificacoes %
@@ -39,7 +40,7 @@ WsDist = 2*ft*tan(Ws/2);
 % -------- %
 
 %% Nao Quantizado - Impulsos %
-% if (bits == 0)
+if (tipoTeste == 0)
     %Retorna zeros, polos e ganho do filtro especificado
     [z, p, k] = criarFiltro(n,Wn,ApMin,As,tipoFiltro);
     %Mapeia o plano analogico (s) no plano digital (z)
@@ -64,4 +65,6 @@ WsDist = 2*ft*tan(Ws/2);
     axis([0 1 -40 10])
     % Plotar gabarito
     gabarito(Wp,Ws,Ap,As)
-% end
+elseif (tipoTeste == 1)
+    
+end
