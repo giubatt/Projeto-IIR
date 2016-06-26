@@ -4,11 +4,11 @@
 % Autores: Lucas Fernandes e Giuseppe Battistella
 % Data: 25/06/2016
 
-clc;clear;
+% clc;clear;close;
 
 %% Parametros %
-bits = 0;                   % Numero de bits (0 - sem quantizacao)
-tipoFiltro = 3;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
+bits = 16;                  % Numero de bits (0 - sem quantizacao)
+tipoFiltro = 2;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
 % -------- %
 
 %% Especificacoes %
@@ -24,8 +24,8 @@ Wp = 2*pi*(fp/ft);          % Frequencias limite da banda passante normalizadas
 Ws = 2*pi*(fs/ft);          % Frequencias limite da banda de rejeicao normalizadas
 
 % Fatores de escalonamento
-a0Escal = 2;
-gEscal = 2;
+a0Escal = 6;
+gEscal = 8.44;
 
 % Pre distorcao das frequencias
 WpDist = 2*ft*tan(Wp/2);
@@ -39,7 +39,7 @@ WsDist = 2*ft*tan(Ws/2);
 % -------- %
 
 %% Nao Quantizado - Impulsos %
-if (bits == 0)
+% if (bits == 0)
     %Retorna zeros, polos e ganho do filtro especificado
     [z, p, k] = criarFiltro(n,Wn,ApMin,As,tipoFiltro);
     %Mapeia o plano analogico (s) no plano digital (z)
@@ -54,15 +54,14 @@ if (bits == 0)
     lengthx = 400;
     x = [g, zeros(1,lengthx)];
     %Implementa o filtro na forma direta II
-    [y,w] = implementaIIR(n,lengthx,x,sos,a0Escal,bits);
+    y = implementaIIR(n,lengthx,x,sos,a0Escal,bits);
     %Ajusta a entrada com o intuito de evitar a quantizacao de saturacao
     y = y*gEscal;
 
-    figure
     %Plota a resposta em frequencia do filtro
     freqz(y(n,1:lengthx)); %Resolucao da dtft eh de 512
     % Ajustar eixos
     axis([0 1 -40 10])
     % Plotar gabarito
     gabarito(Wp,Ws,Ap,As)
-end
+% end

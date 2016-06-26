@@ -14,7 +14,7 @@
 %out: 
 % y = saida do filtro
 
-function [y,w] = implementaIIR(ordem,k,x,sos,escal,bits)
+function y = implementaIIR(ordem,k,x,sos,escal,bits)
 
 y = zeros(ordem,k);
 w = zeros(ordem,k);
