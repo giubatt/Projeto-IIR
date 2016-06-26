@@ -1,22 +1,19 @@
-
-%Projeto Filtro IIR
-%Ajusta a ordem do fitro Chebyshev 1
-%Retorna ordem e valor do ripple na banda passente ajustado
-%para o valor minimo na ordem gerada por cheb1ord()
-
-%Nome: Lucas Fernandes e Giuseppe Batistella 
-
-%Data: 25/06/2016
-%in: 
-%Wp = Frequencia de corte na banda passante
-%Ws = Frequencia de corte na banda de rejeicao
-%Ap = Ripple na banda passante
-%As = Atenuacao na banda de rejeicao
-
-
-%out:
-%Apmin = ripple na banda apos o ajuste de folga
-%Wn = O escalar ou vetor das correspondentes frequencias de corte
+% Projeto Filtro IIR
+% Ajusta a ordem do fitro Chebyshev 1
+% Retorna ordem e valor do ripple na banda passente ajustado
+% para o valor minimo na ordem gerada por cheb1ord()
+% 
+% Autores: Lucas Fernandes e Giuseppe Batistella 
+% Data: 25/06/2016
+% 
+% in: 
+% Wp = Frequencia de corte na banda passante
+% Ws = Frequencia de corte na banda de rejeicao
+% Ap = Ripple na banda passante
+% As = Atenuacao na banda de rejeicao
+% out:
+% Apmin = ripple na banda apos o ajuste de folga
+% Wn = O escalar ou vetor das correspondentes frequencias de corte
 
 function [n,Wn,Apmin] = cheb1Folga(Wp,Ws,Ap,As)
 
