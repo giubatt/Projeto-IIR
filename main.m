@@ -59,6 +59,7 @@ if (bits == 0)
     
     figure
     %Plota a resposta em frequencia do filtro
+    freqz(y(n,1:lengthx)); %Resolucao da dtft eh de 512
     % Ajustar eixos
     axis([0 1 -40 10]) 
 end

@@ -7,6 +7,8 @@
 %in: 
 %n = ordem do filtro
 %Wn = O escalar ou vetor das correspondentes frequencias de corte
+%Ap = Ripple na banda passante
+%As = Atenuacao minima na banda de rejeicao
 %tipoFiltro = tipo do filtro a ser gerado
 
 %out:
@@ -14,7 +16,8 @@
 %p = polos
 %k = ganho
 
-function [z,p,k] = criarFiltro(n,Wn,tipoFiltro)
+
+function [z,p,k] = criarFiltro(n,Wn,Ap,As,tipoFiltro)
 
     if (tipoFiltro == 0) %Filtro ButterWorth
         
@@ -22,7 +25,7 @@ function [z,p,k] = criarFiltro(n,Wn,tipoFiltro)
         
     elseif (tipoFiltro == 1) %Filtro Chebyshev 1
         
-        [z,p,k] = cheby1(n,Apmod,Wn,'bandpass','s');
+        [z,p,k] = cheby1(n,Ap,Wn,'bandpass','s');
          
     elseif (tipoFiltro == 2) %Filtro Chebyshev 2
         
@@ -30,7 +33,7 @@ function [z,p,k] = criarFiltro(n,Wn,tipoFiltro)
             
     elseif (tipoFiltro == 3) %Filtro eliptico
         
-        [z,p,k] = ellip(n,Apmod,As,Wn,'bandpass','s');
+        [z,p,k] = ellip(n,Ap,As,Wn,'bandpass','s');
 
     end
 end
