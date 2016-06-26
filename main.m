@@ -8,7 +8,7 @@ clc;clear;close;
 
 %% Parametros %
 bits = 0;                   % Numero de bits (0 - sem quantizacao)
-filterType = 3;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
+filterType = 0;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
 % -------- %
 
 %% Especificacoes %
