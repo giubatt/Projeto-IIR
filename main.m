@@ -8,7 +8,7 @@ clc;clear;close;
 
 %% Parametros %
 bits = 0;                   % Numero de bits (0 - sem quantizacao)
-filterType = 0;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
+filterType = 3;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
 % -------- %
 
 %% Especificacoes %
@@ -49,6 +49,7 @@ if (bits == 0)
     [sos,g] = zp2sos(zd,pd,kd,'up','two');
     %Ajusta sos para evitar a saturacao de quantizacao
     sos = sos/a0Escal;
+    g = g/gEscal;
     %Preenche x com a quantidade lengthx de zeros
     lengthx = 345;
     x = [g, zeros(1,lengthx)];
@@ -59,6 +60,8 @@ if (bits == 0)
     
     figure
     %Plota a resposta em frequencia do filtro
+    freqz(y(n,1:lengthx));
     % Ajustar eixos
     axis([0 1 -40 10]) 
+    gabarito(Wp,Ws,Ap,As)
 end
