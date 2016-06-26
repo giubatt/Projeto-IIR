@@ -34,6 +34,5 @@ function [z,p,k] = criarFiltro(n,Wn,Ap,As,tipoFiltro)
     elseif (tipoFiltro == 3) %Filtro eliptico
         
         [z,p,k] = ellip(n,Ap,As,Wn,'bandpass','s');
-
     end
 end
