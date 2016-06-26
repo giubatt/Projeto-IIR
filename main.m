@@ -51,14 +51,14 @@ if (bits == 0)
     sos = sos/a0Escal;
     %Preenche x com a quantidade lengthx de zeros
     lengthx = 345;
-    x = [g, zeros(1,k)];
+    x = [g, zeros(1,lengthx)];
     %Implementa o filtro na forma direta II
-    [y,w] = implementaIIR(n,k,x,sos,a0Escal,bits);
+    [y,w] = implementaIIR(n,lengthx,x,sos,a0Escal,bits);
     %Ajusta a entrada com o intuito de evitar a quantizacao de saturacao
     y = y*gEscal;
     
     figure
-    freqz(y(Ordempb,1:k)); %Resolucao da dtft eh de 512
-    % freqz ftw!
-    axis([0 1 -40 10]) % Ajustar eixos
+    %Plota a resposta em frequencia do filtro
+    % Ajustar eixos
+    axis([0 1 -40 10]) 
 end
