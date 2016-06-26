@@ -5,18 +5,18 @@ w = zeros(ordem,k);
 
 for n=1:1:k
     for j=1:ordem
-        a = [qt(sos(j,4),bits) qt(sos(j,5),bits) qt(sos(j,6),bits)];
-        b = [qt(sos(j,1),bits) qt(sos(j,2),bits) qt(sos(j,3),bits)];
+        a = [quantizar(sos(j,4),bits) quantizar(sos(j,5),bits) quantizar(sos(j,6),bits)];
+        b = [quantizar(sos(j,1),bits) quantizar(sos(j,2),bits) quantizar(sos(j,3),bits)];
 
         if j==1
-            if n==1
-                continue;
-            end
-            yAnt = qt(x(n),bits);
+            yAnt = quantizar(x(n),bits);
         else
-            yAnt = qt(y(j-1,n-1),bits);
+            if n~=1
+                yAnt = quantizar(y(j-1,n-1),bits);
+            else
+                yAnt = 0;
+            end
         end
-        
         
         if n>=3
             m=3;
@@ -25,12 +25,14 @@ for n=1:1:k
         end
         for i=1:1:m
             if i == 1
-                w(j,n) = qt(w(j,n) + yAnt,bits);
+                w(j,n) = quantizar(w(j,n) + yAnt,bits);
             else
-                w(j,n) = qt(w(j,n) - qt(a(i)*w(j,n-i+1),bits),bits);
+                w(j,n) = quantizar(w(j,n) - quantizar(a(i)*w(j,n-i+1),bits),bits);
             end
-            y(j,n) = qt(y(j,n) + qt(b(i)*w(j,n-i+1),bits),bits);
-            w(j,n) = qt(w(j,n)*escal,bits);
+            w(j,n) = quantizar(w(j,n)*escal,bits);
+        end
+        for i=1:1:m
+            y(j,n) = quantizar(y(j,n) + quantizar(b(i)*w(j,n-i+1),bits),bits);
         end
     end
 end
