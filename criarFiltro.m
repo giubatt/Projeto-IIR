@@ -16,7 +16,6 @@
 %p = polos
 %k = ganho
 
-
 function [z,p,k] = criarFiltro(n,Wn,Ap,As,tipoFiltro)
 
     if (tipoFiltro == 0) %Filtro ButterWorth
