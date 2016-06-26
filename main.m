@@ -8,7 +8,7 @@ clc;clear;close;
 
 %% Parametros %
 bits = 0;                   % Numero de bits (0 - sem quantizacao)
-filterType = 0;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
+tipoFiltro = 3;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
 % -------- %
 
 %% Especificacoes %
@@ -35,13 +35,13 @@ WsDist = 2*ft*tan(Ws/2);
 [WpDist, WsDist] = ajusteSimetria(WpDist, WsDist);   
 
 % Otimiza a especificacao do filtro p/ ter o menor Ap possivel com mesma ordem
-[n,Wn,ApMin] = preOtimizacao(WpDist,WsDist,Ap,As,filterType);
+[n,Wn,ApMin] = preOtimizacao(WpDist,WsDist,Ap,As,tipoFiltro);
 % -------- %
 
 %% Nao Quantizado - Impulsos %
 if (bits == 0)
     %Retorna zeros, polos e ganho do filtro especificado
-    [z, p, k] = criarFiltro(n,Wn,filterType);
+    [z, p, k] = criarFiltro(n,Wn,Ap,As,tipoFiltro);
     %Mapeia o plano analogico (s) no plano digital (z)
     [zd, pd, kd] = bilinear(z,p,k,ft);
     %Converte a representacao zero-polo-ganho de tempo discreto na
