@@ -21,7 +21,7 @@ function [n,Wn,Apmin] = butterFolga(Wp,Ws,Ap,As)
     %[n,Wn] = buttord(Wp,Ws,Rp,Rs,'s')encontra a menor ordem 'n' e a frequecia de corte Wn para o filtro analogico Butterworth.
     [n,~] = buttord(Wp,Ws,Ap,As,'s');
     N = n+1;    
-    while n<=N         %Ajusta Ap ate a ordem aumentar 
+    while n<N         %Ajusta Ap ate a ordem aumentar 
         Ap = Ap-0.0001;             
         [n,~] = buttord(Wp,Ws,Ap,As,'s');  
     end

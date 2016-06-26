@@ -20,7 +20,7 @@ function [n,Wn,Apmin] = cheb1Folga(Wp,Ws,Ap,As)
     %[n,Wn] = cheb1ord(Wp,Ws,Rp,Rs,'s')encontra a menor ordem 'n' e a frequecia de corte Wn para o filtro analogico Chebyshev 1.
     [n,~] = cheb1ord(Wp,Ws,Ap,As,'s');
     N = n+1;    
-    while n<=N         %Ajusta Ap ate a ordem aumentar 
+    while n<N         %Ajusta Ap ate a ordem aumentar 
         Ap = Ap-0.0001;             
         [n,~] = cheb1ord(Wp,Ws,Ap,As,'s');  
     end

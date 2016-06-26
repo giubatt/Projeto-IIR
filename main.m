@@ -7,9 +7,10 @@
 clc;clear;
 
 %% Parametros %
-bits = 20;                  % Numero de bits (0 - sem quantizacao)
-tipoFiltro = 2;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
+bits = 12;                  % Numero de bits (0 - sem quantizacao)
+tipoFiltro = 0;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
 tipoTeste = 1;              % Tipo do teste (0 - impulso, 1 - senoides)
+numSenoides = 30;           % Numero de senoides
 % -------- %
 
 %% Especificacoes %
@@ -41,6 +42,7 @@ WsDist = 2*ft*tan(Ws/2);
 
 %% Nao Quantizado - Impulsos %
 if (tipoTeste == 0)
+
     %Retorna zeros, polos e ganho do filtro especificado
     [z, p, k] = criarFiltro(n,Wn,ApMin,As,tipoFiltro);
 
@@ -73,9 +75,12 @@ if (tipoTeste == 0)
 
     % Plotar gabarito
     gabarito(Wp,Ws,Ap,As)
+end
 
-elseif (tipoTeste == 1)
+%% Teste com Senoides
+if (tipoTeste == 1)
     pronto = 0;
+    erro = 0;
     while (pronto==0)
         % Retorna zeros, polos e ganho do filtro especificado
         [z, p, k] = criarFiltro(n,Wn,ApMin,As,tipoFiltro);
@@ -89,9 +94,6 @@ elseif (tipoTeste == 1)
 
         % Ajusta sos para evitar a saturacao de quantizacao
         sos = sos/a0Escal;
-
-        % Numero de senoides
-        numSenoides = 20;
 
         % Freuencia e maximos de entrada e saida de cada senoide utilizada
         sinXmax = zeros(1,numSenoides);
@@ -120,7 +122,7 @@ elseif (tipoTeste == 1)
             y = y*gEscal;
 
             % DFT da saida
-            yDFT = fft(y(n,1:max(amostras)));
+            yDFT = fft(y(n,1:max(amostras)/2));
 
             % Fundamental
             fund = find(abs(yDFT) == max(abs(yDFT)));
@@ -150,10 +152,21 @@ elseif (tipoTeste == 1)
         ganhoSin = sinYmax./sinXmax;
         ganhoSin = 20*log10(ganhoSin);
 
-        pronto = 1;
+        [pronto, ApMin] = otimizar(Wp,Ws,Ap,As,numSenoides,ganhoSin,sinW,ApMin);
+
+        if (n>10 || ApMin <= 0)
+            erro = 1;
+        end
+%         pronto = 1;
     end
 
-    stem((sinW/pi),ganhoSin) % Plotar ganho (dB)
-    axis([0 1 -40 10]) % Ajustar eixos
-    gabarito(Wp,Ws,Ap,As) % Plotar gabarito
+    if (erro==1)
+        disp('ERRO: Nao foi possivel otimizar o filtro.')
+    else
+        stem((sinW/pi),ganhoSin) % Plotar ganho (dB)
+        axis([0 1 -40 10]) % Ajustar eixos
+        gabarito(Wp,Ws,Ap,As) % Plotar gabarito
+    end
 end
+
+
