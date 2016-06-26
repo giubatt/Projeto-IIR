@@ -40,14 +40,21 @@ WsDist = 2*ft*tan(Ws/2);
 
 %% Nao Quantizado - Impulsos %
 if (bits == 0)
-    [z, p, k] = gerarFiltro(n,Wn,filterType);
+    %Retorna zeros, polos e ganho do filtro especificado
+    [z, p, k] = criarFiltro(n,Wn,filterType);
+    %Mapeia o plano analogico (s) no plano digital (z)
     [zd, pd, kd] = bilinear(z,p,k,ft);
-    [sos,g] = zp2sos(zp,pd,kd,'up','two');
+    %Converte a representacao zero-polo-ganho de tempo discreto na
+    %representacao equivalente de segunda ordem
+    [sos,g] = zp2sos(zd,pd,kd,'up','two');
+    %Ajusta sos para evitar a saturacao de quantizacao
     sos = sos/a0Escal;
-    k = 345;
+    %Preenche x com a quantidade lengthx de zeros
+    lengthx = 345;
     x = [g, zeros(1,k)];
-    
+    %Implementa o filtro na forma direta II
     [y,w] = implementaIIR(n,k,x,sos,a0Escal,bits);
+    %Ajusta a entrada com o intuito de evitar a quantizacao de saturacao
     y = y*gEscal;
     
     figure
