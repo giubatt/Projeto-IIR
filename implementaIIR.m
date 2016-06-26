@@ -53,38 +53,3 @@ for n=1:1:k
         end
     end
 end
-
-% for n=1:1:k
-% 
-%     for j=1:ordem
-%         b = [quantizar(sos(j,1),bits) quantizar(sos(j,2),bits) quantizar(sos(j,3),bits)];
-%         a = [quantizar(sos(j,4),bits) quantizar(sos(j,5),bits) quantizar(sos(j,6),bits)];
-% 
-%         if n-2<=0 && n-1<=0 % n=1;
-%             if j==1
-%                 w(j,n)=(x(1))/(1/escal);
-%                 y(j,n)=quantizar(b(1)*w(j,n),bits);
-%             else
-%                 w(j,n)=0;
-%                 y(j,n)=0;
-%             end
-%         elseif n-2<=0 && n-1>=1 % n=2;
-%             if j==1
-%                 w(j,n)=quantizar((quantizar(-a(2)*w(j,n-1),bits)+x(2))/(1/escal),bits);
-%                 y(j,n)=quantizar(quantizar(b(1)*w(j,n),bits)+quantizar(b(2)*w(j,n-1),bits),bits);
-%             else
-%                 w(j,n)=quantizar((y(j-1,n-1)+quantizar(-a(2)*w(j,n-1),bits))/(1/escal),bits);
-%                 y(j,n)=quantizar(quantizar(b(1)*w(j,n),bits)+quantizar(b(2)*w(j,n-1),bits),bits);
-%             end
-%         else % n>=3;
-%             if j==1
-%                 w(j,n)=quantizar((x(n)+quantizar(-a(2)*w(j,n-1),bits)+quantizar(-a(3)*w(j,n-2),bits))/(1/escal),bits);
-%                 y(j,n)=quantizar(quantizar(b(1)*w(j,n),bits)+quantizar(b(2)*w(j,n-1),bits)+quantizar(b(3)*w(j,n-2),bits),bits);
-%             else
-%                 w(j,n)=quantizar((y(j-1,n-1)+quantizar(-a(2)*w(j,n-1),bits)+quantizar(-a(3)*w(j,n-2),bits))/(1/escal),bits);
-%                 y(j,n)=quantizar(quantizar(b(1)*w(j,n),bits)+quantizar(b(2)*w(j,n-1),bits)+quantizar(b(3)*w(j,n-2),bits),bits);   
-%             end
-%         end
-%     end
-% 
-% end
