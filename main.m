@@ -49,7 +49,6 @@ if (bits == 0)
     [sos,g] = zp2sos(zd,pd,kd,'up','two');
     %Ajusta sos para evitar a saturacao de quantizacao
     sos = sos/a0Escal;
-    g = g/gEscal;
     %Preenche x com a quantidade lengthx de zeros
     lengthx = 345;
     x = [g, zeros(1,lengthx)];
@@ -60,8 +59,7 @@ if (bits == 0)
     
     figure
     %Plota a resposta em frequencia do filtro
-    freqz(y(n,1:lengthx));
+    freqz(y(n,1:lengthx)); %Resolucao da dtft eh de 512
     % Ajustar eixos
     axis([0 1 -40 10]) 
-    gabarito(Wp,Ws,Ap,As)
 end
