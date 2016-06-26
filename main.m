@@ -4,7 +4,7 @@
 % Autores: Lucas Fernandes e Giuseppe Battistella
 % Data: 25/06/2016
 
-clc;clear;close;
+clc;clear;
 
 %% Parametros %
 bits = 0;                   % Numero de bits (0 - sem quantizacao)
@@ -24,8 +24,8 @@ Wp = 2*pi*(fp/ft);          % Frequencias limite da banda passante normalizadas
 Ws = 2*pi*(fs/ft);          % Frequencias limite da banda de rejeicao normalizadas
 
 % Fatores de escalonamento
-a0Escal = 6;
-gEscal = 20.5;
+a0Escal = 2;
+gEscal = 2;
 
 % Pre distorcao das frequencias
 WpDist = 2*ft*tan(Wp/2);
@@ -51,7 +51,7 @@ if (bits == 0)
     sos = sos/a0Escal;
     g = g/gEscal;
     %Preenche x com a quantidade lengthx de zeros
-    lengthx = 345;
+    lengthx = 400;
     x = [g, zeros(1,lengthx)];
     %Implementa o filtro na forma direta II
     [y,w] = implementaIIR(n,lengthx,x,sos,a0Escal,bits);

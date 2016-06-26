@@ -7,7 +7,7 @@
 % 
 % bits = quantidade de bits da mantissa, vetor = vetor a ser quantizado; 
 
-function [vetor_quantizado] = qt(vetor, bits)
+function [vetor_quantizado] = quantizar(vetor, bits)
     if(bits == 0) 
         vetor_quantizado = vetor;
     else
