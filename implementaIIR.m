@@ -1,3 +1,19 @@
+% Projeto Filtro IIR
+% Implementa o filtro na forma direta II 
+
+% Autores: Lucas Fernandes e Giuseppe Battistella
+% Data: 25/06/2016
+
+%in: 
+% oderm = ordem do filtro
+% k = quantidade de zeros em x
+% sos = Second-order-sections (retornado pela funcao sos();)
+% escal = escalar de a0
+% bits = quantidade de bits a ser quantizado
+
+%out: 
+% y = saida do filtro
+
 function [y,w] = implementaIIR(ordem,k,x,sos,escal,bits)
 
 y = zeros(ordem,k);
