@@ -8,7 +8,7 @@ clc;clear;close;
 
 %% Parametros %
 bits = 0;                   % Numero de bits (0 - sem quantizacao)
-filterType = 0;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
+filterType = 3;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
 % -------- %
 
 %% Especificacoes %
@@ -41,7 +41,7 @@ WsDist = 2*ft*tan(Ws/2);
 %% Nao Quantizado - Impulsos %
 if (bits == 0)
     %Retorna zeros, polos e ganho do filtro especificado
-    [z, p, k] = criarFiltro(n,Wn,filterType);
+    [z, p, k] = criarFiltro(n,Wn,ApMin,As,filterType);
     %Mapeia o plano analogico (s) no plano digital (z)
     [zd, pd, kd] = bilinear(z,p,k,ft);
     %Converte a representacao zero-polo-ganho de tempo discreto na
@@ -49,6 +49,7 @@ if (bits == 0)
     [sos,g] = zp2sos(zd,pd,kd,'up','two');
     %Ajusta sos para evitar a saturacao de quantizacao
     sos = sos/a0Escal;
+    g = g/gEscal;
     %Preenche x com a quantidade lengthx de zeros
     lengthx = 345;
     x = [g, zeros(1,lengthx)];
@@ -62,4 +63,6 @@ if (bits == 0)
     freqz(y(n,1:lengthx)); %Resolucao da dtft eh de 512
     % Ajustar eixos
     axis([0 1 -40 10]) 
+    % Plotar gabarito
+    gabarito(Wp,Ws,Ap,As) 
 end
