@@ -7,11 +7,11 @@
 % 
 % bits = quantidade de bits da mantissa, vetor = vetor a ser quantizado; 
 
-function [vetor_quantizado] = qt(vetor, bits)
+function [vetor_quantizado] = quantizar(vetor, bits)
     if(bits == 0) 
         vetor_quantizado = vetor;
     else
-        vetor_quantizado = round((vetor*2^bits))*(2^(-bits));  
+        vetor_quantizado = fix((vetor/2^(-bits)) + 0.5*sign(vetor))*(2^(-bits));  
         vetor_quantizado(vetor_quantizado>1) = 1;              % satura em 1 caso o valor ultrapasse 1
         vetor_quantizado(vetor_quantizado<-1) = -1;            % satura em -1 caso ultrapasse -1
     end
