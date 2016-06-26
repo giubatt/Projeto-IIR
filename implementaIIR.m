@@ -5,18 +5,19 @@ w = zeros(ordem,k);
 
 for n=1:1:k
     for j=1:ordem
-        a = [qt(sos(j,4),bits) qt(sos(j,5),bits) qt(sos(j,6),bits)];
-        b = [qt(sos(j,1),bits) qt(sos(j,2),bits) qt(sos(j,3),bits)];
-
-        if j==1
-            if n==1
-                continue;
-            end
-            yAnt = qt(x(n),bits);
-        else
-            yAnt = qt(y(j-1,n-1),bits);
-        end
+        a = [sos(j,4) sos(j,5) sos(j,6)];
+        b = [sos(j,1) sos(j,2) sos(j,3)];
         
+        
+        if j==1
+            yAnt = x(n);
+        else
+            if n~=1
+                yAnt = y(j-1,n-1);
+            else
+                yAnt = 0;
+            end
+        end
         
         if n>=3
             m=3;
@@ -25,12 +26,14 @@ for n=1:1:k
         end
         for i=1:1:m
             if i == 1
-                w(j,n) = qt(w(j,n) + yAnt,bits);
+                w(j,n) = w(j,n) + yAnt*escal;
             else
-                w(j,n) = qt(w(j,n) - qt(a(i)*w(j,n-i+1),bits),bits);
+                w(j,n) = w(j,n) - a(i)*w(j,n-i+1)*escal;
             end
-            y(j,n) = qt(y(j,n) + qt(b(i)*w(j,n-i+1),bits),bits);
-            w(j,n) = qt(w(j,n)*escal,bits);
+        end
+        
+        for i=1:1:m
+            y(j,n) = y(j,n) + b(i)*w(j,n-i+1);
         end
     end
 end
