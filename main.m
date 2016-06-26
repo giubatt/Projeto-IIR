@@ -7,10 +7,10 @@
 clc;clear;
 
 %% Parametros %
-bits = 12;                  % Numero de bits (0 - sem quantizacao)
+bits = 30;                  % Numero de bits (0 - sem quantizacao)
 tipoFiltro = 0;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
 tipoTeste = 1;              % Tipo do teste (0 - impulso, 1 - senoides)
-numSenoides = 30;           % Numero de senoides
+numSenoides = 50;           % Numero de senoides
 % -------- %
 
 %% Especificacoes %
@@ -44,7 +44,7 @@ WsDist = 2*ft*tan(Ws/2);
 if (tipoTeste == 0)
 
     %Retorna zeros, polos e ganho do filtro especificado
-    [z, p, k] = criarFiltro(n,Wn,ApMin,As,tipoFiltro);
+    [z, p, k, n, Wn] = criarFiltro(WpDist,WsDist,ApMin,As,tipoFiltro);
 
     %Mapeia o plano analogico (s) no plano digital (z)
     [zd, pd, kd] = bilinear(z,p,k,ft);
@@ -81,9 +81,11 @@ end
 if (tipoTeste == 1)
     pronto = 0;
     erro = 0;
-    while (pronto==0)
+    AsMin = As;
+    ApMin = ApMin - 0.01;
+    while (pronto==0)        
         % Retorna zeros, polos e ganho do filtro especificado
-        [z, p, k] = criarFiltro(n,Wn,ApMin,As,tipoFiltro);
+        [z, p, k, n, Wn] = criarFiltro(WpDist,WsDist,ApMin,As,tipoFiltro);
 
         % Mapeia o plano analogico (s) no plano digital (z)
         [zd, pd, kd] = bilinear(z,p,k,ft);
@@ -110,12 +112,12 @@ if (tipoTeste == 1)
             w = ((i-1)/(numSenoides-1))*pi;
             sinW(i) = w;
             x = (1/gEscal)*cos(w*(amostras-1));
-            x_temp = g*x;
             % Maximo da entrada atual
             sinXmax(i) = max(abs(fft(x)));
+            x = g*x;
 
             % Passa a entrada pelo filtro
-            y = implementaIIR(n,max(amostras),x_temp,sos,a0Escal,bits);
+            y = implementaIIR(n,max(amostras),x,sos,a0Escal,bits);
 
             % Maximo da saida atual
             sinYmax(i) = max(abs(fft(y(n,1:max(amostras)))));
@@ -152,12 +154,15 @@ if (tipoTeste == 1)
         ganhoSin = sinYmax./sinXmax;
         ganhoSin = 20*log10(ganhoSin);
 
-        [pronto, ApMin] = otimizar(Wp,Ws,Ap,As,numSenoides,ganhoSin,sinW,ApMin);
+        [pronto, ApMin, AsMin] = otimizar(Wp,Ws,Ap,As,numSenoides,ganhoSin,sinW,ApMin,AsMin);
 
         if (n>10 || ApMin <= 0)
             erro = 1;
         end
 %         pronto = 1;
+        stem((sinW/pi),ganhoSin) % Plotar ganho (dB)
+        axis([0 1 -40 10]) % Ajustar eixos
+        gabarito(Wp,Ws,ApMin,AsMin) % Plotar gabarito
     end
 
     if (erro==1)

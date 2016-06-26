@@ -1,28 +1,35 @@
-function [pronto, ApMin]= otimizar(Wp,Ws,Ap,As,numSenoides,ganhoSin,sinW,ApMin)
-
-    violacao = zeros(1,numSenoides);
-    deltaAp = 0.01;
+function [pronto, ApMin, AsMin]= otimizar(Wp,Ws,Ap,As,numSenoides,ganhoSin,sinW,ApMin,AsMin)
+    
+    violaPass = 0;
+    violaRej = 0;
+    deltaAp = 0.005;
+    deltaAs = 0.5;
 
     for n=1:numSenoides
         % Banda de rejeicao
         if sinW(n) <= Ws(1)
             if ganhoSin(n) > (-As)
-                violacao(n) = 1;
+                violaRej = 1;
             end
+        % Banda passante
         elseif sinW(n) >= Wp(1) && sinW(n) <= Wp(2)
             if ganhoSin(n) > 0 || ganhoSin(n) < (-Ap)
-                violacao(n) = 1;
+                violaPass = 1;
             end
+        % Banda de rejeicao
         elseif sinW(n) >= Ws(2)
             if ganhoSin(n) > (-As)
-                violacao(n) = 1;
+                violaRej = 1;
             end
         end
     end
 
-    pronto = not(any(violacao));
+    pronto = ~violaRej && ~violaPass;
 
-    if (pronto == 0)
+    if (violaPass == 1)
         ApMin = ApMin - deltaAp;
+    end
+    if (violaRej == 1)
+        AsMin = AsMin + deltaAs;
     end
 end
