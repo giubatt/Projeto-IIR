@@ -4,14 +4,18 @@
 % Autores: Lucas Fernandes e Giuseppe Battistella
 % Data: 25/06/2016
 
-clc;clear;
+clear;
 
 %% Parametros %
-bits = 12;                  % Numero de bits (0 - sem quantizacao)
+bits = 16;                  % Numero de bits (0 - sem quantizacao)
 tipoFiltro = 0;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
 tipoTeste = 1;              % Tipo do teste (0 - impulso, 1 - senoides)
-numSenoides = 100;           % Numero de senoides
+numSenoides = 30;           % Numero de senoides
 % -------- %
+
+% Fatores de escalonamento
+a0Escal = 6;
+gEscal = 19.89;
 
 %% Especificacoes %
 fp = [0.6 1.6]*10^3;        % Limites da banda passante
@@ -25,9 +29,7 @@ As = 35;                    % Atenuacao minima da banda de rejeicao
 Wp = 2*pi*(fp/ft);          % Frequencias limite da banda passante normalizadas
 Ws = 2*pi*(fs/ft);          % Frequencias limite da banda de rejeicao normalizadas
 
-% Fatores de escalonamento
-a0Escal = 6;
-gEscal = 20.5;
+
 
 % Pre distorcao das frequencias
 WpDist = 2*ft*tan(Wp/2);
@@ -170,6 +172,7 @@ if (tipoTeste == 1)
         stem((sinW/pi),ganhoSin) % Plotar ganho (dB)
         axis([0 1 -40 10]) % Ajustar eixos
         gabarito(Wp,Ws,Ap,As) % Plotar gabarito
+        fprintf('THD: %.4f\n', THDmatlabMedio);
     end
 end
 
