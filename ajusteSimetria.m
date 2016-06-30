@@ -1,6 +1,6 @@
 % Projeto Filtro IIR
 % Teste de simetria
-% Calcula ws e wp que satisfaçam a simetria, sem modificar wp
+% Calcula ws e wp que satisfacam a simetria, sem modificar wp
 % 
 % Autores: Lucas Fernandes e Giuseppe Battistella
 % Data: 25/06/2016

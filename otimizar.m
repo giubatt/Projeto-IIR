@@ -2,7 +2,7 @@ function [pronto, ApMin, AsMin]= otimizar(Wp,Ws,Ap,As,numSenoides,ganhoSin,sinW,
     
     violaPass = 0;
     violaRej = 0;
-    deltaAp = 0.005;
+    deltaAp = 0.05;
     deltaAs = 0.5;
 
     for n=1:numSenoides

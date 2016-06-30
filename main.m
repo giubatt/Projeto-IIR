@@ -7,10 +7,10 @@
 clc;clear;
 
 %% Parametros %
-bits = 30;                  % Numero de bits (0 - sem quantizacao)
+bits = 12;                  % Numero de bits (0 - sem quantizacao)
 tipoFiltro = 0;             % Tipo do filtro (0 - bw, 1 - cb1, 2 - cb2, 3 - elp)
 tipoTeste = 1;              % Tipo do teste (0 - impulso, 1 - senoides)
-numSenoides = 50;           % Numero de senoides
+numSenoides = 100;           % Numero de senoides
 % -------- %
 
 %% Especificacoes %
@@ -82,10 +82,9 @@ if (tipoTeste == 1)
     pronto = 0;
     erro = 0;
     AsMin = As;
-    ApMin = ApMin - 0.01;
     while (pronto==0)        
         % Retorna zeros, polos e ganho do filtro especificado
-        [z, p, k, n, Wn] = criarFiltro(WpDist,WsDist,ApMin,As,tipoFiltro);
+        [z, p, k, n, Wn] = criarFiltro(WpDist,WsDist,ApMin,AsMin,tipoFiltro);
 
         % Mapeia o plano analogico (s) no plano digital (z)
         [zd, pd, kd] = bilinear(z,p,k,ft);
